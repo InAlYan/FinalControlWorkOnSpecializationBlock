@@ -138,14 +138,37 @@ public class ServiceBackup implements IServiceBackup {
                 // Собираем объект типа Animal
                 Animal animal = null;
                 try {
-                    animal = switch (strAnimalKind) {
-                        case "DOG"      -> Dog.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                        case "CAT"      -> Cat.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                        case "HAMSTER"  -> Hamster.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                        case "HORSE"    -> Horse.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                        case "CAMEL"    -> Camel.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                        case "DONKEY"   -> Donkey.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                        default -> null;
+                    // animal = switch (strAnimalKind) {
+                    //     case "DOG"      -> Dog.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                    //     case "CAT"      -> Cat.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                    //     case "HAMSTER"  -> Hamster.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                    //     case "HORSE"    -> Horse.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                    //     case "CAMEL"    -> Camel.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                    //     case "DONKEY"   -> Donkey.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                    //     default -> null;
+                    // animal = switch (strAnimalKind) {
+                        switch (strAnimalKind) {
+                        case "DOG":
+                            animal = Dog.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                            break;
+                        case "CAT":
+                            animal = Cat.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                            break;
+                        case "HAMSTER":
+                            animal = Hamster.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                            break;
+                        case "HORSE":
+                            animal = Horse.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                            break;
+                        case "CAMEL":
+                            animal = Camel.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                            break;
+                        case "DONKEY":
+                            animal = Donkey.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
+                            break;
+                        default:
+                            animal = null;
+                            break;
                     };
                 } catch (AnimalNickNameException e) {
                     System.out.println(strAnimalKind + " => " + e.getMessage() + e.getNickname() + " => не создано");
