@@ -37,6 +37,7 @@ cat pets pack_animals > pets_and_pack_animals\
 cat pets_and_pack_animals
 
 ![результаты объединения в командной строке](./img/cat%20pets_and_pack_animals.png "результаты в командной строке")
+
 Рис.1: результаты объединения в командной строке
 
 mv pets_and_pack_animals human_friends \
