@@ -69,7 +69,8 @@ public class ServiceBackup implements IServiceBackup {
         int maxId = 0;
         try (FileReader fr = new FileReader(fileName)) {
             BufferedReader br = new BufferedReader(fr);
-            Character s;
+            String newLine;
+
             while (br.ready()) {
 
                 int ID;
@@ -77,13 +78,13 @@ public class ServiceBackup implements IServiceBackup {
                 Date dateBirthday = null;
                 int AnimalTypeSpecificProperty, SpecificProperty;
 
-                // Читаем посимвольно данные об объекте до символа ";" или до конца файла и собираем строку
                 StringBuilder sb = new StringBuilder();
+
+                // Читаем построчно данные об объекте до символа ";" или до конца файла и собираем строку объекта
                 do {
-                    s = (char) br.read();
-                    sb.append(s);
-                } while (s != ';' && br.ready());
-                if (s == ';') s = (char) br.read(); // Пропускаем символ "\n" после символа ";" разделяющее объекты в текстовом файле
+                    newLine = br.readLine();
+                    sb.append(newLine).append('\n');
+                } while (br.ready() && !newLine.contains(";"));                
 
                 // Пытаемся парсить данные об объектах представляющих животных
                 try {
@@ -100,12 +101,12 @@ public class ServiceBackup implements IServiceBackup {
                     String[] strBirthdayArr = strNicknameBirthdayArr[2].split(": "); // Разбираем 2 часть 1 строки из массива с датой рождения по символу пробел
                     String strBirthday = strBirthdayArr[strBirthdayArr.length - 1];  // День рождения
 
-                    StringBuilder commandStringBuilder = new StringBuilder(); ////
+                    StringBuilder commandStringBuilder = new StringBuilder();
                     if (strArr.length > 4) { // Если команды у животного указаны
                         for (int i = 3; i < strArr.length - 2 ; i++) { // Вычленяем команды из строк (с 3 с начала по предпоследнюю), для животных у которых они есть
                             String[] strAnimalCommandArr = strArr[i].split(" ");
                             String strAnimalCommand = strAnimalCommandArr[strAnimalCommandArr.length - 1]; // Текущая команда
-                            commandStringBuilder.append(strAnimalCommand).append(";"); ////
+                            commandStringBuilder.append(strAnimalCommand).append(";");
                         }
                     }
                     strAnimalCommands = commandStringBuilder.toString();
@@ -138,15 +139,6 @@ public class ServiceBackup implements IServiceBackup {
                 // Собираем объект типа Animal
                 Animal animal = null;
                 try {
-                    // animal = switch (strAnimalKind) {
-                    //     case "DOG"      -> Dog.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                    //     case "CAT"      -> Cat.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                    //     case "HAMSTER"  -> Hamster.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                    //     case "HORSE"    -> Horse.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                    //     case "CAMEL"    -> Camel.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                    //     case "DONKEY"   -> Donkey.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
-                    //     default -> null;
-                    // animal = switch (strAnimalKind) {
                         switch (strAnimalKind) {
                         case "DOG":
                             animal = Dog.create(ID, strNickname, dateBirthday, AnimalTypeSpecificProperty, SpecificProperty);
